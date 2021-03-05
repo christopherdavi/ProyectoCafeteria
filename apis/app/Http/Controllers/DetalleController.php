@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Detalle;
+use Illuminate\Http\Request;
+use App\Http\Resources\DetalleResource;
+
+class DetalleController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $detalle= Detalle::all();
+        return $detalle;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $detalle= new Detalle();
+        $detalle->user_id=$request->user_id;
+        $detalle->producto_id=$request->producto_id;
+        $detalle->pedido_id=$request->pedido_id;
+
+        if($detalle->save()){
+            return new DetalleResource($detalle);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return Detalle::findOrFail($id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $detalle=Detalle::findOrFail($id);
+        $detalle->user_id=$request->user_id;
+        $detalle->producto_id=$request->producto_id;
+        $detalle->pedido_id=$request->pedido_id;
+
+        if($detalle->save()){
+            return new DetalleResource($detalle);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $detalle_Detealle::findOrFail($id);
+        if($detalle->delete()){
+            return new DetalleResource($detalle);
+        }
+    }
+}
