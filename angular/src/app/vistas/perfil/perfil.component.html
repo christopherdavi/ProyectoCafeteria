@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="perfil.component.css">
+</head>
+<body>
+    
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h3 class="mb-5 text-center heading">Completar tu perfil del Caffe</h3>
+                    <form [formGroup]="perfilFrom" (ngSubmit)="guardarPerfil(perfilFrom.value)">
+                        <div class="form-group"> 
+                            <label class="form-control-label text-muted">Cedula</label> 
+                            <input type="text" id="cedula" placeholder="Ingrese su número de CI" class="form-control" formControlName="cedula"> 
+                        </div>
+                        <div class="form-group"> 
+                            <label class="form-control-label text-muted">Número Telefónico</label> 
+                            <input type="text" id="telefono" placeholder="Ingrese su número de teléfono" class="form-control" formControlName="telefono"> 
+                        </div>
+                        <div class="form-group"> 
+                            <label class="form-control-label text-muted">Direccion </label> 
+                            <input type="text" id="direccion" placeholder="Ingrese su direccion domiciliaria" class="form-control" formControlName="direccion"> 
+                        </div>
+                        <div class="row justify-content-center my-3 px-3"> 
+                            <button type="submit" class="btn-block btn-color">Guardar</button> 
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

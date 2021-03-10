@@ -1,1 +1,40 @@
-<p>detalle works!</p>
+<br><br>
+<h1 class="text-center">Catálogo de productos</h1>
+<br>
+<button routerLink='/carrito' (click)="PostearPedido()"   class="pedido">Ver carrito de compra</button>
+<div class="container ">
+     <div class="row align-items-start d-flex justify-content-center">
+        <div *ngFor="let key of  productos">
+                <div *ngFor="let categoria of categorias">
+                    <div *ngIf="key.categoria_id===categoria.id">
+                        <div class="col-4" >
+                            <div class="card mb-3 p-2 color"   style="width: 15rem;">
+                                <div class="card-body">
+                                <h5 class="card-title"  [ngClass]="{'color': flag, 'sinColor': !flag}">Nombre: {{key.nombre}}</h5>
+                                <p class="card-text">Detalle: {{key.detalle}}</p>
+                                <p class="card-text">Precio: {{key.precio}}</p>
+                                <p class="card-text">Tipo: {{categoria.nombre_categoria}}</p>    
+                                </div>
+                                <div class="fileContainer">
+                                    <button (click)="clickeado=true; mostrar=key.id" > Mostrar </button>
+                                  </div>
+                          
+                                  <div *ngIf="clickeado && mostrar==key.id">
+                                    <div>
+                                        <input type="number" [(ngModel)]='textoDeInput'>
+                                        <p class="card-text">Cantidad:{{this.pedidos.cantidad}}</p>
+                                        <button (click)="carrito(key.id,textoDeInput)" class="btn-primary mr-2 mb-2">Añadir</button>
+                                        <!-- <button (click)="borrarElemento(cantidad,key.id)" class="btn-danger ml-2">Quitar</button> -->
+                                    </div>
+                                    <button (click)="clickeado=false"> Ocultar </button>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- routerLink='/pedidos'    [ngClass]="{'color': flag, 'sinColor': !flag}" -->

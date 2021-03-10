@@ -24,7 +24,9 @@ class PedidoFactory extends Factory
         return [
             'fecha'=>$this->faker->date,
             'orden'=>$this->faker->sentence,
-            'total'=>$this->faker->numberBetween($min = 5, $max = 1000)
+            'total'=>$this->faker->numberBetween($min = 5, $max = 1000),
+            'user_id' => random_int(1, 5),
+            'detalle_id' => random_int(1, 5),
         ];
     }
 }

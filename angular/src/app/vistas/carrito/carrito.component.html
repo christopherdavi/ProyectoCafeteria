@@ -1,0 +1,46 @@
+<br><br>
+<h1 class="text-center">Carrito de compras</h1>
+<br>
+<button routerLink='/detalle' class="pedido">Añadir productos</button>
+<button routerLink='/pedidos' class="pedido">Realizar pedido</button>
+<div class="container" >
+     <div class="row align-items-start d-flex justify-content-center">
+         <div *ngFor="let detalle of detalles">
+        <div *ngFor="let key of  productos">
+            <div *ngFor="let categoria of categorias">
+                <div *ngIf="key.categoria_id===categoria.id">
+                    <div *ngIf="detalle.producto_id===key.id && this.pedidos.user_id==detalle.user_id ">
+                        <div class="col-4" >
+                            <div class="card mb-3 p-2 activado"   style="width: 15rem;">
+                                <div class="card-body">
+                                <h5 class="card-title" >Nombre: {{key.nombre}}</h5>
+                                <p class="card-text">Detalle: {{key.detalle}}</p>
+                                <p class="card-text">Precio: {{key.precio}}</p>
+                                <p class="card-text">Tipo: {{categoria.nombre_categoria}}</p>    
+                                </div>
+                                <div class="fileContainer">
+                                    <p class="card-text">Cantidad:{{detalle.cantidad}}</p>
+                                  </div>
+                                  <button (click)="eliminarDetalle(detalle.id)" class="btn-danger ml-2">Quitar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div *ngIf="this.detalles[0]===undefined">
+<h2>No hay productos</h2>
+</div>
+    </div>
+</div>
+
+
+
+<!-- routerLink='/pedidos'    [ngClass]="{'color': flag, 'sinColor': !flag}" -->
+
+
+
+
+
+

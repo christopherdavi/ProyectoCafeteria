@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import {ListaProducto} from '../../models/listaproductos.interface';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import { ListaPedido } from '../../models/listapedidos.interface';
+import { Login } from '../../models/login';
+import { Response} from '../../models/response';
+import { Registrarse } from '../../models/registrarse';
+import { Perfil } from '../../models/perfil';
+import { DetallePedido } from '../../models/detalle-pedido';
 
-const baseURLProductos = "http://127.0.0.1:8000/api/productos";
-const baseURLPedidos = "http://127.0.0.1:8000/api/pedidos";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,23 @@ export class LaravelApiService {
 
   constructor( private http:HttpClient) { }
 
-  getAllProduts():Observable<ListaProducto[]>{
-  	return this.http.get<ListaProducto[]>(baseURLProductos)
+  loginByEmail(form:Login):Observable<Response>{
+    let url = "http://127.0.0.1:8000/api/login"
+    return this.http.post<Response>(url, form)
   }
 
-  getAllPedidos():Observable<ListaPedido[]>{
-  	return this.http.get<ListaPedido[]>(baseURLPedidos)
+  registerUser(form:Registrarse):Observable<Response>{
+    let url = "http://127.0.0.1:8000/api/register"
+    return this.http.post<Response>(url,form)
+  }
+
+  crearPerfil(form:Perfil):Observable<Perfil>{
+    let url = "http://127.0.0.1:8000/api/perfil/create"
+    return this.http.post<Perfil>(url, form)
+  }
+
+  detallesPedido(id:any):Observable<DetallePedido[]>{
+    let url ="http://127.0.0.1:8000/api/detalle/pedido/"+id;
+    return this.http.get<DetallePedido[]>(url)
   }
 }

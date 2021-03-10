@@ -20,6 +20,12 @@ class CategoriaController extends Controller
         $categoria = Categoria::all();
         return $categoria;
     }
+    public function indexDetalle()
+    {
+        //
+        $categoria = Categoria::all();
+        return CategoriaResource::collection($categoria);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -67,7 +73,8 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categoria = Categoria::where('id', $id)->first();
+      return $categoria;
     }
 
     /**
@@ -79,12 +86,11 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $categoria = Categoria::FindOrFail($id);
-        $categoria -> nombre_categoria = $request -> nombre_categoria;
-        if($categoria->save()){
-            return new CategoriaResource($categoria);
-        }
+        $categoria=Categoria::find($id);
+        $categoria->nombre_categoria=$request->get("nombre_categoria");
+        
+        $categoria -> save();
+        return $categoria;
     }
 
     /**

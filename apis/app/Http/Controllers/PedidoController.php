@@ -42,6 +42,8 @@ class PedidoController extends Controller
         $pedido->fecha=$request->fecha;
         $pedido->orden=$request->orden;
         $pedido->total=$request->total;
+        $pedido->detalle_id=$request->detalle_id;
+        $pedido->user_id=$request->user_id;
 
         if($pedido->save()){
             return new PedidoResource($pedido);
@@ -56,7 +58,12 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        return Pedido::findOrFail($id);
+        $pedido = Pedido::where("pedidos.user_id", "=", $id)
+        ->select("pedidos.orden", "users.name", "users.email","perfils.cedula", "perfils.telefono", "perfils.direccion")
+        ->join("users", "users.id", "=", "pedidos.user_id")
+        ->join("perfils", "perfils.user_id", "=", "users.id")
+        ->get();
+        return $pedido;
     }
 
     /**
@@ -82,6 +89,8 @@ class PedidoController extends Controller
         $pedido= Pedido::findOrFail($id);
         $pedido->orden=$request->orden;
         $pedido->total=$request->total;
+        $pedido->detalle_id=$request->detalle_id;
+        $pedido->user_id=$request->user_id;
 
         if($pedido->save()){
             return new PedidoResource($pedido);

@@ -12,10 +12,12 @@ class Detalle extends Model
     public function productos(){
         return $this-> belongsToMany(Producto::class)->withTimeStamps();
     }
-    public function users(){
-        return $this-> hasMany(User::class)->withTimeStamps();
-    }
+
     public function pedidos(){
-        return $this-> belongsToMany(Pedido::class)->withTimeStamps();
+        return $this-> hasOne(Pedido::class)->withTimeStamps();
+    }
+
+    public function user(){
+        return $this->hasOne(Pedido::class)->withTimeStamps();
     }
 }

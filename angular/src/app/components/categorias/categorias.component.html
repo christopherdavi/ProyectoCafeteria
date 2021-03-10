@@ -1,0 +1,25 @@
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<app-navbar></app-navbar>
+<br><br><br><br>
+<form (ngSubmit)="addData()" class="ml-3">
+    <div class="form-group">
+      <label for="name">nombre</label>
+      <input type="text" name="name" class="form-control" [(ngModel)]="categorias.nombre_categoria">
+    </div>
+    <button class="btn btn-dark btn-sm mt-4 mb-4">Registrar</button>
+  </form>
+  <table class="table ml-4">
+       <thead>
+         <tr>
+          <th scope="col">id</th>
+           <th scope="col">nombre de categoría</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr *ngFor="let categoria of categoria">
+          <th scope="row">{{categoria.id}}</th>
+           <th scope="row">{{categoria.nombre_categoria}}</th>
+           <td><button class="btn btn-danger" (click)="deleteData(categoria.id)">Eliminar</button></td>
+           <td><button class="btn btn-primary" routerLink="edit/{{categoria.id}}">Editar</button></td>
+         </tbody>
+       </table>

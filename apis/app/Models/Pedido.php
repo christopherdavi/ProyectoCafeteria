@@ -9,7 +9,8 @@ class Pedido extends Model
 {
     use HasFactory;
     
-    public function detalle(){
-        return $this-> hasMany(Detalle::class)->withTimeStamps();
+    
+    public function users(){
+        return $this-> belongsTo(User::class)->withTimeStamps();
     }
 }

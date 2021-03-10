@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Detalle;
+
 use Illuminate\Http\Request;
+use App\Models\Detalle;
 use App\Http\Resources\DetalleResource;
 
 class DetalleController extends Controller
@@ -15,7 +16,7 @@ class DetalleController extends Controller
     public function index()
     {
         $detalle= Detalle::all();
-        return $detalle;
+        return DetalleResource::collection($detalle);
     }
 
     /**
@@ -28,6 +29,16 @@ class DetalleController extends Controller
         //
     }
 
+    public function getDetallesPedido($id)
+    {
+        $detalle = Detalle::where("detalles.user_id", "=",$id)
+        ->select("detalles.status", "detalles.cantidad", "productos.nombre","productos.precio", "categorias.nombre_categoria")
+        ->join("productos", "productos.id", "=", "detalles.producto_id")
+        ->join("categorias", "categorias.id", "=", "productos.categoria_id")
+        ->get();
+        return $detalle;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -37,9 +48,11 @@ class DetalleController extends Controller
     public function store(Request $request)
     {
         $detalle= new Detalle();
-        $detalle->user_id=$request->user_id;
+        $detalle->status=$request->status;
+        $detalle->cantidad=$request->cantidad;
         $detalle->producto_id=$request->producto_id;
-        $detalle->pedido_id=$request->pedido_id;
+        $detalle->user_id=$request->user_id;
+        
 
         if($detalle->save()){
             return new DetalleResource($detalle);
@@ -54,7 +67,8 @@ class DetalleController extends Controller
      */
     public function show($id)
     {
-        return Detalle::findOrFail($id);
+        $detalle = Detalle::findOrFail($id);
+        return new DetalleResource($detalle);
     }
 
     /**
@@ -78,9 +92,11 @@ class DetalleController extends Controller
     public function update(Request $request, $id)
     {
         $detalle=Detalle::findOrFail($id);
-        $detalle->user_id=$request->user_id;
+        $detalle->status=$request->status;
+        $detalle->cantidad=$request->cantidad;
         $detalle->producto_id=$request->producto_id;
-        $detalle->pedido_id=$request->pedido_id;
+        $detalle->user_id=$request->user_id;
+        
 
         if($detalle->save()){
             return new DetalleResource($detalle);
@@ -95,7 +111,7 @@ class DetalleController extends Controller
      */
     public function destroy($id)
     {
-        $detalle_Detealle::findOrFail($id);
+        $detalle=Detalle::findOrFail($id);
         if($detalle->delete()){
             return new DetalleResource($detalle);
         }

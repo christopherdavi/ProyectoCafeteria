@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {LaravelApiService} from '../../services/api/laravel-api.service';
-import { ListaPedido } from '../../models/listapedidos.interface';
-import {FormGroup, FormControl, Validators} from '@angular/forms'
-
+import {Router, ActivatedRoute} from '@angular/router';
+import { DetallePedido } from '../../models/detalle-pedido';
+import { LaravelApiService } from 'src/app/services/api/laravel-api.service';
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',
@@ -10,28 +9,33 @@ import {FormGroup, FormControl, Validators} from '@angular/forms'
 })
 export class PedidosComponent implements OnInit {
 
-  pedidoForm = new FormGroup({
-    fecha: new FormControl(new Date().getDay()),
-    orden: new FormControl('', Validators.required),
-    total: new FormControl('')
-  })
-  pedidos:ListaPedido[]=[];  
-  listadoCarrito: number[]=[]
-
-  constructor(private api:LaravelApiService) { }
-  
+  constructor(private activaterouter:ActivatedRoute, private router:Router, private api:LaravelApiService) { }
+  pedidoUserPrducto:any=[];
+  detallesPedido:DetallePedido[]=[];
+  index:number=0;
+  subtotal:any=[];
+  total:number=0
   ngOnInit(): void {
-  	this.api.getAllPedidos().subscribe((data) => {
-      this.pedidos = data;
-      console.log(this.pedidos);
-  		
-  		})
+    let pedidoProductos = localStorage.getItem('user_id') //this.activaterouter.snapshot.paramMap.get('id')
+   
+    this.api.detallesPedido(pedidoProductos).subscribe(data=>{
+      for (let j = 0; j < data.length; j++) {
+        if (data[j].status="Agregado") {
+          this.detallesPedido = data;   
+        }
+      }
+      for (let index = 0; index < this.detallesPedido.length; index++) {
+        if (this.detallesPedido[index].status="Agregado") {
+          this.subtotal.push(this.detallesPedido[index].cantidad * this.detallesPedido[index].precio)  
+          console.log(this.subtotal)   
+        }    
+      }
+      for (let i = 0; i < this.subtotal.length; i++) {
+        let numero = this.subtotal[i];
+        this.total += numero; 
+        console.log(this.total);       
+      }      
+      console.log(data);
+    })
   }
-  agregarCarrito(){
-    
-  }
-  quitarCarrito(){
-
-  }
-
 }

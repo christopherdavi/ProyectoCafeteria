@@ -1,0 +1,53 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<app-navbar></app-navbar>
+<br><br><br><br>
+<form (ngSubmit)="insertData()" class="ml-4">
+    <div class="form-group">
+      <label for="name">nombre</label>
+      <input type="text" name="name" class="form-control" [(ngModel)]="productoss.nombre">
+    </div>
+    <div class="form-group">
+      <label for="last_name">detalle</label>
+      <input type="text" name="last_name" class="form-control" [(ngModel)]="productoss.detalle">
+    </div>
+    
+    <div class="form-group">
+      <label for="identification">precio</label>
+      <input type="text" name="identification" class="form-control" [(ngModel)]="productoss.precio">
+    </div >
+    <div class="form-group">
+      <label for="identification">categoria</label>
+      <select type="text" name="identification" class="form-control" [(ngModel)]="productoss.categoria_id">
+        <option *ngFor="let categoria of categoria" value={{categoria.id}}>{{categoria.nombre_categoria}}</option>
+      </select>
+    </div >
+    
+    <button class="btn btn-dark btn-sm mt-4 mb-4">Registrar</button>
+  </form>
+  
+  <table class="table ml-2">
+       <thead>
+         <tr>
+          <th scope="col">id</th>
+  
+           <th scope="col">nombre</th>
+           <th scope="col">detalle</th>
+           <th scope="col">precio</th>
+           <th scope="col">categoria</th>
+           <th scope="col">Acción</th>
+           
+         </tr>
+       </thead>
+       <tbody>
+         <tr *ngFor="let productos of productos">
+          <th scope="row">{{productos.id}}</th>
+           <th scope="row">{{productos.nombre}}</th>
+           <td  scope="row"> {{productos.detalle}}</td>
+           <td  scope="row">{{productos.precio}}</td>
+           <td  scope="row">{{productos.categoria_id}}</td>
+           
+           
+           <td><button class="btn btn-danger" (click)="deleteData(productos.id)">Eliminar</button></td>
+           <td><button class="btn btn-primary" routerLink="edit/{{productos.id}}">Editar</button></td>
+         </tbody>
+       </table>

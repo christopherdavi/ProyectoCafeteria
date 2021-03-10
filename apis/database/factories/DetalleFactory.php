@@ -22,9 +22,10 @@ class DetalleFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => random_int(1, 5),
-            'pedido_id' => random_int(1, 5),
+            'status'=>$this->faker->word, 
+            'cantidad'=>$this->faker->randomDigit, 
             'producto_id' => random_int(2, 5),
+            'user_id' => random_int(2, 5),
         ];
     }
 }

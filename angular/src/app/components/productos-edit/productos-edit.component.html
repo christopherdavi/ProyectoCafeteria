@@ -1,0 +1,21 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<app-navbar></app-navbar>
+<br><br><br><br>
+<form (ngSubmit)="updateProductos()" class="ml-4">
+    <div class="form-group">
+      <label for="name">nombre</label>
+      <input type="text" name="name" class="form-control" [(ngModel)]="productoss.nombre">
+    </div>
+    <div class="form-group">
+      <label for="last_name">detalle</label>
+      <input type="text" name="last_name" class="form-control" [(ngModel)]="productoss.detalle">
+    </div>
+    
+    <div class="form-group">
+      <label for="identification">precio</label>
+      <input type="text" name="identification" class="form-control" [(ngModel)]="productoss.precio">
+    </div>
+    <button class="btn btn-dark mr-2">Actualizar</button>
+    <button class="btn btn-danger ml-2" routerLink="/productos">Regresar</button>
+
+  </form>
